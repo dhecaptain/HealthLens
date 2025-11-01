@@ -1,14 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-
-if (!GEMINI_API_KEY) {
-  throw new Error('GEMINI_API_KEY is not set in environment variables');
-}
-
-const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-
 const SYSTEM_PROMPT = `You are HealthLens AI, an expert medical and nutritional analysis assistant. Your role is to analyze images of:
 1. Medication labels and prescriptions
 2. Food products and nutrition labels
@@ -158,6 +150,15 @@ export default async function handler(
     if (!analysisType) {
       return res.status(400).json({ error: 'Analysis type is required' });
     }
+
+    // Check for API key
+    const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+    if (!GEMINI_API_KEY) {
+      return res.status(500).json({ error: 'GEMINI_API_KEY is not configured' });
+    }
+
+    // Initialize Gemini AI
+    const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
     // Remove data URL prefix if present
     const base64Data = imageBase64.replace(/^data:image\/\w+;base64,/, '');
