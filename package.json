@@ -4,15 +4,11 @@
   "description": "HealthLens - AI-powered medication and nutrition analysis assistant",
   "main": "dist/server.js",
   "scripts": {
-    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
-    "server:dev": "nodemon --exec ts-node src/server/index.ts",
-    "client:dev": "cd client && npm run dev",
-    "build": "vite build",
-    "build:server": "tsc",
-    "build:client": "cd client && npm run build",
-    "start": "node dist/server.js",
-    "install:all": "npm install && cd client && npm install"
-  },
+  "dev": "vite",
+  "build": "vite build",
+  "preview": "vite preview"
+},
+
   "keywords": [
     "health",
     "nutrition",
